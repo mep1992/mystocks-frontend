@@ -58,7 +58,7 @@
     methods: {
       getBalance() {
         const self = this
-        const url = `${process.env.VUE_APP_ROOT_API}api/account/balance`
+        const url = `${process.env.VUE_APP_BACKEND}api/account/balance`
         axios.get(url).then(function (response) {
           console.log('getBalance:', response.data)
           self.balance = response.data.amount
@@ -69,7 +69,7 @@
       },
       deposit() {
         const self = this
-        const url = `${process.env.VUE_APP_ROOT_API}api/account/deposit`
+        const url = `${process.env.VUE_APP_BACKEND}api/account/deposit`
         axios.post(url, {amount: this.depositAmount}).then(function (response) {
           console.log('deposit:', response.data)
           self.balance = response.data.amount
@@ -79,7 +79,7 @@
       },
       withdraw() {
         const self = this
-        const url = `${process.env.VUE_APP_ROOT_API}api/account/withdraw`
+        const url = `${process.env.VUE_APP_BACKEND}api/account/withdraw`
         axios.post(url, {amount: this.withdrawAmount}).then(function (response) {
           console.log('withdraw:', response.data)
           self.balance = response.data.amount
@@ -89,7 +89,7 @@
       },
       buy() {
         const self = this
-        const url = `${process.env.VUE_APP_ROOT_API}api/order/buy`
+        const url = `${process.env.VUE_APP_BACKEND}api/order/buy`
         axios.post(url, {stock: self.buyStock, quantity: self.buyQuantity}).then(function (response) {
           console.log('buy:', response.data)
           self.balance = response.data.balance
@@ -99,7 +99,7 @@
       },
       sell() {
         const self = this
-        const url = `${process.env.VUE_APP_ROOT_API}api/order/sell`
+        const url = `${process.env.VUE_APP_BACKEND}api/order/sell`
         axios.post(url, {stock: self.sellStock, quantity: self.sellQuantity}).then(function (response) {
           console.log('buy:', response.data)
           self.balance = response.data.balance
