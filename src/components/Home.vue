@@ -30,14 +30,19 @@
             <md-input v-model="sellQuantity" type="number"></md-input>
         </md-field>
         <md-button class="md-raised md-primary" @click="sell">Sell</md-button>
+        <StockList :key="stockListKey"/>
     </div>
 </template>
 
 <script>
   import axios from 'axios'
+  import StockList from "./StockList";
 
   export default {
     name: 'Home',
+    components: {
+      StockList
+    },
     props: {
       title: String
     },
@@ -49,7 +54,8 @@
         buyStock: null,
         buyQuantity: null,
         sellStock: null,
-        sellQuantity: null
+        sellQuantity: null,
+        stockListKey: 0
       }
     },
     mounted() {
@@ -58,7 +64,7 @@
     methods: {
       getBalance() {
         const self = this
-        const url = `${process.env.VUE_APP_BACKEND}api/account/balance`
+        const url = `${process.env.VUE_APP_BACKEND}api/balance`
         axios.get(url).then(function (response) {
           console.log('getBalance:', response.data)
           self.balance = response.data.amount
@@ -69,7 +75,7 @@
       },
       deposit() {
         const self = this
-        const url = `${process.env.VUE_APP_BACKEND}api/account/deposit`
+        const url = `${process.env.VUE_APP_BACKEND}api/balance/deposit`
         axios.post(url, {amount: this.depositAmount}).then(function (response) {
           console.log('deposit:', response.data)
           self.balance = response.data.amount
@@ -79,7 +85,7 @@
       },
       withdraw() {
         const self = this
-        const url = `${process.env.VUE_APP_BACKEND}api/account/withdraw`
+        const url = `${process.env.VUE_APP_BACKEND}api/balance/withdraw`
         axios.post(url, {amount: this.withdrawAmount}).then(function (response) {
           console.log('withdraw:', response.data)
           self.balance = response.data.amount
@@ -89,20 +95,22 @@
       },
       buy() {
         const self = this
-        const url = `${process.env.VUE_APP_BACKEND}api/order/buy`
+        const url = `${process.env.VUE_APP_BACKEND}api/stock/buy`
         axios.post(url, {stock: self.buyStock, quantity: self.buyQuantity}).then(function (response) {
           console.log('buy:', response.data)
           self.balance = response.data.balance
+          self.stockListKey +=1
         }).catch(function (error) {
           console.log(error)
         })
       },
       sell() {
         const self = this
-        const url = `${process.env.VUE_APP_BACKEND}api/order/sell`
+        const url = `${process.env.VUE_APP_BACKEND}api/stock/sell`
         axios.post(url, {stock: self.sellStock, quantity: self.sellQuantity}).then(function (response) {
           console.log('buy:', response.data)
           self.balance = response.data.balance
+          self.stockListKey +=1
         }).catch(function (error) {
           console.log(error)
         })

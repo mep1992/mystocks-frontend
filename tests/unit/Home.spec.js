@@ -1,5 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils'
-import Home from '@/views/Home.vue'
+import Home from '@/components/Home.vue'
 import axios from 'axios'
 import VueMaterial from 'vue-material'
 import Vue from 'vue'
